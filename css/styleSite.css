@@ -1,0 +1,72 @@
+html {
+	width : 70% ;
+	padding:0 ;
+	margin :0 ;
+}
+
+#bandeau {	
+	font-size:30px;
+	color:red ;
+}
+
+header{
+	width : 100% ;
+	border-style : solid;
+	border-width: thin;
+	text-align : center;
+	font-size : 18px;
+	font-weight : bold;
+	padding-top : 10px;
+	background-color : lightbue;
+	-moz-border-radius : 10px
+}
+
+body{
+	background-color : white ;
+	-moz-border-radius : 30px;	
+}
+
+l
+article{ 
+	display:block ;
+	clear:both ;
+	float : right ;
+	margin-top: 10px; 
+}
+
+nav{	
+	float : left;   
+	list-style-type : none;
+	padding: 0;
+	margin: 0;	
+	width ! 100% ;
+}
+
+#menu a  {	
+	display : block ;
+	text-align:center;
+	width:auto;
+	color:black;
+	text-decoration:none;
+	background:url("../images/ul_background.png") ;	
+	padding:5px;
+	margin-right:2px; /* separer les block */
+}
+
+#menu li {
+	float:left;	
+	line-height:36px;
+}
+
+#menu a:hover {
+	color:blue;
+	cursor:pointer;
+	background-image:url("../images/ul_background_hover.png");	
+}
+
+fieldset {
+	border-color : red ;
+	width:auto;
+}
+
+
