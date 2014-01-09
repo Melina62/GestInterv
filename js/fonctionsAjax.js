@@ -35,8 +35,8 @@
 	function envoyerListe(methode, url, idChamp, codeId )
 	{
 		alert(methode + " url=" + url + " champ =" + idChamp +" id =" + codeId) ;
-		// url =  "FO/Modeles/Interventions/" +  url  + ".inc.php" ;		
-		url =   url  + ".inc.php" ;			
+		url =  "FO/Modeles/Interventions/" +  url  + ".inc.php" ;		
+		//url =   url  + ".inc.php" ;			
 		alert (url) ;
 	
 		//  récupération d'un objet XMLHttpRequest

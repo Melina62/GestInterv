@@ -1,14 +1,14 @@
 <?php
-	function reconnecter()
+	function connecter()
 	{
 		require_once("classe/clstBaseMysql.classe.php") ;	
-		$oSql = new clstBaseMysql("localhost", "root", "", "gestinterv") ;
+		$oSql = new clstBaseMysql("localhost", "root", "", "GestInterv") ;
 		return ($oSql) ;
 	}	
 	
 	FUNCTION getAllSalles()
 	{		
-		$oSql= reconnecter() ;		
+		$oSql= connecter() ;		
 		$sReq = " SELECT Sal_Num 
 				  FROM SALLE ";
 		$rstSal = $oSql->query($sReq) ;
@@ -24,7 +24,7 @@
 	
 	FUNCTION getAllMateriels()
 	{		
-		$oSql= reconnecter() ;		
+		$oSql= connecter() ;		
 		$sReq = " SELECT Mat_Code, Mat_Libelle
 				  FROM MATERIEL ";
 		$rstMat = $oSql->query($sReq) ;
@@ -41,7 +41,7 @@
 	
 	FUNCTION getAllCategories()
 	{		
-		$oSql= reconnecter() ;		
+		$oSql= connecter() ;		
 		$sReq = " SELECT Cat_Code ,Cat_Libelle 
 				  FROM CATEGORIE ";
 		$rstCat = $oSql->query($sReq) ;	
@@ -60,11 +60,11 @@
 	// les tickets du demandeur
 	FUNCTION getMesTickets($pLogin, $pEtat)
 	{		
-		$oSql= reconnecter() ;		
+		$oSql= connecter() ;		
 		$sReq = " SELECT Tic_Num, Tic_Materiel
 				  FROM  TICKET , UTILISATEUR
-				  WHERE Tic_Intervenant = Uti_Code
-				  AND   Tic_Etat        = " . $pEtat . "
+				  WHERE Tic_Etat        = " . $pEtat . "
+				  AND   Tic_Intervenant = Uti_Code
 				  AND   Uti_Login       = '".  $pLogin ."'
 				  ORDER BY Tic_Num " ;	
 		//echo $sReq ;			
@@ -83,7 +83,7 @@
 	// tous les tickets déclarés pour le responsable
 	FUNCTION getAllDeclares()
 	{		
-		$oSql= reconnecter() ;	
+		$oSql= connecter() ;	
 		$sReq = "SELECT Tic_Num, Tic_Salle, Cat_Libelle, Tic_Materiel, Tic_DatCre, Tic_Constat, Eta_Libelle , Uti_Nom  as Dem
 				 FROM  TICKET, CATEGORIE , ETAT, UTILISATEUR 
 				 WHERE Tic_Etat     = 1
@@ -108,7 +108,7 @@
 	// tous les autres tickets pour le responsable
 	FUNCTION getLesTickets( $pEtat)
 	{		
-		$oSql= reconnecter() ;	
+		$oSql= connecter() ;	
 		$sReq = "SELECT Tic_Num, Tic_Salle, Cat_Libelle, Tic_Materiel, Tic_DatCre, Tic_Constat, Eta_Libelle , A.Uti_Nom  as Dem , B.Uti_Nom  as Interv
 				 FROM  TICKET, CATEGORIE , ETAT, UTILISATEUR A, UTILISATEUR B 
 				 WHERE Tic_Etat       = " . $pEtat . "
@@ -130,10 +130,29 @@
 		return ($lesTickets) ;
 	}
 	
+	FUNCTION getLesTicketsResp()
+	{		
+		$oSql= connecter() ;	
+		$sReq = "SELECT *
+				 FROM  TICKET
+				 ORDER BY Tic_Num " ;	
+		//echo $sReq ;					 
+		$rstTic = $oSql->query($sReq) ;	
+
+		$iNb = 0 ;
+		$lesTickets = array() ;		
+		while ($uneLigne = $oSql->tabAssoc($rstTic) )
+		{
+			$iNb = $iNb + 1 ;
+			$lesTickets[$iNb] =  $uneLigne ;
+		}
+		return ($lesTickets) ;
+	}
+	
 	// intervenant et tickets affectés
 	FUNCTION getAllTicketsAff($pLogin, $pEtat)
 	{		
-		$oSql= reconnecter() ;		
+		$oSql= connecter() ;		
 		$sReq = " SELECT Tic_Num, Tic_DatCre,Tic_Salle, Cat_Libelle , Tic_Materiel, Tic_Constat , Eta_Libelle
 				  FROM CATEGORIE, UTILISATEUR,  TICKET, ETAT
 				  WHERE Uti_Login     = '" . $pLogin ."'
@@ -159,7 +178,7 @@
 	// intervenant et les tickets pris en charge  (voire plus)
 	FUNCTION getAllMesTickets($pLogin, $pEtat)
 	{		
-		$oSql= reconnecter() ;		
+		$oSql= connecter() ;		
 		$sReq = " SELECT Tic_Num, Tic_DatCre,Tic_Salle, Cat_Libelle , Tic_Materiel, Int_Num, Int_Debut, Tic_Constat , Eta_Libelle
 				  FROM INTERVENTION , CATEGORIE, UTILISATEUR,  TICKET, ETAT
 				  WHERE Uti_Login     = '" . $pLogin ."'
@@ -187,7 +206,7 @@
 	// toutes les demandes
 	FUNCTION getAllDemandes($pLogin, $pEtat)
 	{		
-		$oSql= reconnecter() ;		
+		$oSql= connecter() ;		
 		$sReq = " SELECT Tic_Num, Tic_DatCre, Tic_Salle , Cat_Libelle, Tic_Materiel,  Tic_Constat, Eta_Libelle 
 				  FROM  CATEGORIE, UTILISATEUR,  TICKET, ETAT
 				  WHERE Uti_Login     = '" . $pLogin ."'
@@ -208,5 +227,77 @@
 		return ($lesTickets) ;
 	}
 	
-		
+	// tous les tickets résolus
+	FUNCTION getTckResolus()
+	{		
+		$oSql= connecter() ;		
+		$sReq = " SELECT Tic_Num, Tic_Salle, Tic_Materiel, Tic_Demandeur, Tic_Constat, Tic_Intervenant
+				  FROM  TICKET
+				  WHERE Tic_Etat = 6";
+		$rstTic = $oSql->query($sReq) ;	
+
+		$iNb = 0 ;
+		$lesTickets = array() ;		
+		while ($uneLigne = $oSql->tabAssoc($rstTic) )
+		{
+			$iNb = $iNb + 1 ;
+			$lesTickets[$iNb] =  $uneLigne ;
+		}
+		return ($lesTickets) ;
+	}
+	
+	// tous les tickets sans solution
+	FUNCTION getTckSansSoluc()
+	{		
+		$oSql= connecter() ;		
+		$sReq = " SELECT Tic_Num, Tic_Salle, Tic_Materiel, Tic_Demandeur, Tic_Constat, Tic_Intervenant
+				  FROM  TICKET
+				  WHERE Tic_Etat = 7";
+		$rstTic = $oSql->query($sReq) ;	
+
+		$iNb = 0 ;
+		$lesTickets = array() ;		
+		while ($uneLigne = $oSql->tabAssoc($rstTic) )
+		{
+			$iNb = $iNb + 1 ;
+			$lesTickets[$iNb] =  $uneLigne ;
+		}
+		return ($lesTickets) ;
+	}
+	
+	FUNCTION getAllEtat()
+	{		
+		$oSql= connecter() ;		
+		$sReq = " SELECT Eta_Code, Eta_Libelle
+				  FROM etat
+				  ORDER BY Eta_Code ";		
+		$rstEtat = $oSql->query($sReq) ;	
+
+		$iNb = 0 ;
+		$lesEtats = array() ;		
+		while ($uneLigne = $oSql->tabAssoc($rstEtat ) )
+		{
+			$iNb = $iNb + 1 ;
+			$lesEtats[$iNb] =  $uneLigne ;
+		}
+		return ($lesEtats) ;
+	}	
+	
+	FUNCTION getAllTicketEtat($pProb)
+	{		
+		$oSql= connecter() ;		
+		$sReq = " SELECT Tic_Num, Tic_Salle, Tic_Categorie, Tic_Materiel, Tic_DatCre, Tic_Demandeur, Tic_Intervenant
+				  FROM TICKET
+				  WHERE Tic_Categorie = " . $pProb ."
+				  ORDER BY Tic_Num ";		
+		$rstTicket = $oSql->query($sReq) ;	
+		$iNb = 0 ;
+		$lesTickets = array() ;		
+		while ($uneLigne = $oSql->tabAssoc($rstTicket) )
+		{
+			$iNb = $iNb + 1 ;
+			$lesTickets[$iNb] =  $uneLigne ;
+		}
+		return ($lesTickets) ;
+	}	
 ?>

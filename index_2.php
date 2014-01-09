@@ -73,7 +73,7 @@
 						$fichier = "FO/Modeles/Tickets/priseChargeTicket.inc.php" ;
 						break ;	
 
-					case "mesInterv":
+					case "mesIntervs":
 						$fichier = "FO/Vues/Interventions/fo_mesInterventions.php" ;
 						$titre   = "suivi de mes interventions";
 						break ;	
@@ -83,15 +83,19 @@
 						$titre   = "Historique des interventions finies";
 						break ;	
 						
-					case "modifier":
+					case "modifierInterv":
 						$fichier = "FO/Vues/Interventions/fo_modifierInterv.php" ;
 						$titre   = "modification de l'intervention";
 						break ;		
 						
 					case "modifier":
 						$fichier = "FO/Modeles/Interventions/modifierInterv.inc.php" ;
-						$titre   = "modification de l'intervention";
 						break ;	
+						
+					case "terminerInterv":
+						$fichier = "FO/Vues/Interventions/fo_terminerInterv.php" ;
+						$titre   = "Terminer l'intervention";
+						break ;
 					
 					case "IntervProbleme":
 						$fichier = "FO/Vues/Interventions/fo_IntervProblemes.php";
@@ -100,6 +104,11 @@
 						
 					case "afficherInterv":
 						$fichier = "FO/Modeles/Interventions/afficherInterv.inc.php";
+						break;
+						
+					case "TicketEtat":
+						$fichier = "FO/Vues/Tickets/fo_suivisTicket.php";
+						$titre   = "Affichage des tickets par état";
 						break;
 						
 					case "creer":

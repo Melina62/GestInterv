@@ -8,12 +8,11 @@
 	<fieldset>
 		<legend> Lire l'intervention </legend>
 		<br/> <br/>
-		<form name ="frm_intervention" action="ajouter" method="POST">
+		<form name ="frm_intervention" action="?page=modifier" method="POST">
 			<table border = 1>
 				<tr>
 					<th> Numéro intervention </th>
-					<td><?php echo $uneInterv["Int_Num"] ; ?><input type ="hidden" name="txt_interv" id="txt_interv" value="<?php echo $iNum ; ?>"/></td>
-					
+					<td><?php echo $uneInterv["Int_Num"] ; ?></td>
 				</tr>
 				<tr>
 					<th> Date création </th>
@@ -45,16 +44,16 @@
 			<br></br>
 			<fieldset>
 			<legend> Terminer l'intervention </legend>
-			<br></br>
-					<td><th>Etat </th></td>
-					<br></br>
+			<br>
 			<table>
 				<tr>
-					<td><input type="radio" id="btn_etat" name="btn_etat"></td>
-				</tr>
-					<input type="submit" id="cmd_modifier" name="cmd_modifier" value="Modifier">
-					<input type="reset" id="cmd_annuler" name="cmd_annuler" value="Annuler">
+					<th>Etat : </th>
+					<td><input type="radio" id="btn_resolu" name="btn_etat" value="6"/>Résolu
+						<input type="radio" id="btn_non_resolu" name="btn_etat" value="7"/>Sans solution
+					</td>
 				</tr>
 			</table>
+			<input type="submit" id="valider" name="valider" value="Terminer"/>
+			<input type="submit" id="annuler" name="annuler" value="Annuler"/>
 		</form>
 	</fieldset>

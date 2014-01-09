@@ -13,7 +13,8 @@
 ?>
 		<li><a href="?page=ajouter">Créer un ticket</a></li>
 		<li><a href="?page=priseCharge">Prise en charge de tickets</a></li>
-		<li><a href="?page=mesInterv">Suivre mes interventions</a></li>
+		<li><a href="?page=TicketEtat">Suivis des tickets</a></li>
+		<li><a href="?page=mesIntervs">Suivre mes interventions</a></li>
 		<li><a href="?page=histInterv">Historique des interventions</a></li>
 		<li><a href="?page=IntervProbleme">Affichage interventions</a></li>		
 <?php

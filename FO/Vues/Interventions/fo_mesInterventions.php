@@ -30,8 +30,7 @@
 					<td><?php echo $uneInterv["Tic_Salle"] ; ?></td>
 					<td><?php echo $uneInterv["Tic_Materiel"] ; ?></td>
 					<td><?php echo $uneInterv["Cat_Libelle"] ;?></td>	
-					<td><a href="?page=modifier&num=<?php echo $uneInterv['Int_Num']; ?>">traiter </a></td>	
-					
+					<td><a href="?page=terminerInterv&num=<?php echo $uneInterv['Int_Num']; ?>">terminer </a></td>
 				</tr>
 <?php
 			}

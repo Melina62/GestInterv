@@ -1,4 +1,4 @@
-<?php
+<?php	
 	function connecter()
 	{
 		require_once("classe/clstBaseMysql.classe.php") ;	
@@ -6,7 +6,7 @@
 		return ($oSql) ;
 	}	
 	
-	FUNCTION getUneInterv( $pNum)
+	FUNCTION getUneInterv($pNum)
 	{		
 		$oSql= connecter() ;		
 		$sReq = " SELECT Tic_Num, Tic_DatCre, Tic_Salle, Cat_Libelle , Tic_Materiel, Int_Num, Int_Debut, Tic_Constat , Eta_Libelle
